@@ -1,0 +1,31 @@
+{
+  "name": "karma-snapshot",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "description": "Karma plugin for snapshot testing.",
+  "license": "MIT",
+  "author": {
+    "name": "Boris Kaul",
+    "email": "localvoid@gmail.com",
+    "url": "https://github.com/localvoid"
+  },
+  "keywords": [
+    "karma-plugin",
+    "karma-adapter",
+    "snapshot"
+  ],
+  "homepage": "https://github.com/localvoid/karma-snapshot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/localvoid/karma-snapshot"
+  },
+  "bugs": {
+    "url": "https://github.com/localvoid/karma-snapshot/issues"
+  },
+  "github": "https://github.com/localvoid/karma-snapshot",
+  "scripts": {},
+  "dependencies": {
+    "mkdirp": "^0.5.1"
+  },
+  "devDependencies": {}
+}
