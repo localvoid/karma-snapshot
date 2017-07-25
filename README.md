@@ -6,7 +6,8 @@
 
 ```sh
 $ npm install karma karma-webpack karma-sourcemap-loader karma-snapshot karma-mocha \
-              karma-mocha-snapshot mocha chai chai-karma-snapshot --save-dev
+              karma-mocha-snapshot karma-mocha-reporter karma-chrome-launcher mocha \
+              chai chai-karma-snapshot webpack --save-dev
 ```
 
 Karma configuration: 
