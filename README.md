@@ -94,6 +94,7 @@ config.set({
   snapshot: {
     update: true,       // Run snapshot tests in UPDATE mode (default: false)
     pretty: true,       // Serialize snapshot in a pretty format (default: true)
+    prune: true,        // Prune snapshots for removed tests (default: true)
     path: "snapshot.js" // Path to snapshot data file (default: __snapshot__/karma.js)
   }
 });
