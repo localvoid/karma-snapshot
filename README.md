@@ -2,6 +2,24 @@
 
 `karma-snapshot` provides a communication layer between browser and karma to store and retrieve snapshot data.
 
+## Snapshot Format
+
+Snapshots are stored in a [Markdown](https://en.wikipedia.org/wiki/Markdown) format to improve readability.
+
+````md
+## `Root Suite`
+
+##   `Sub Suite`
+
+####     `HTML Snapshot`
+
+```html
+<div>
+  <span />
+</div>
+```
+````
+
 ## Usage Example with Mocha and Chai
 
 ```sh
@@ -21,7 +39,10 @@ module.exports = function (config) {
     browsers: ["ChromeHeadless"],
     frameworks: ["mocha", "snapshot", "mocha-snapshot"],
     reporters: ["mocha"],
-    preprocessors: { "__tests__/index.js": ["webpack", "sourcemap"] },
+    preprocessors: {
+      "**/__snapshot__/**/*.md": ["snapshot"],
+      "__tests__/index.js": ["webpack", "sourcemap"]
+    },
     files: ["__tests__/index.js"],
 
     colors: true,
@@ -93,9 +114,8 @@ config.set({
   ...
   snapshot: {
     update: true,       // Run snapshot tests in UPDATE mode (default: false)
-    pretty: true,       // Serialize snapshot in a pretty format (default: true)
     prune: true,        // Prune snapshots for removed tests (default: true)
-    path: "snapshot.js" // Path to snapshot data file (default: __snapshot__/karma.js)
+    path: "snapshot.md" // Path to snapshot data file (default: __snapshot__/index.md)
   }
 });
 ```

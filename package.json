@@ -1,6 +1,6 @@
 {
   "name": "karma-snapshot",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "lib/index.js",
   "description": "Karma plugin for snapshot testing.",
   "license": "MIT",
@@ -30,7 +30,9 @@
   ],
   "scripts": {},
   "dependencies": {
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "remark-parse": "^4.0.0",
+    "unified": "^6.1.5"
   },
   "devDependencies": {}
 }
