@@ -139,10 +139,11 @@ function resolve(basePath, suiteName) {
 config.set({
   ...
   snapshot: {
-    update: true,          // Run snapshot tests in UPDATE mode (default: false)
-    prune: true,           // Prune snapshots for removed tests (default: true)
-    checkSourceFile: true, // Checks existince of the source file associated with tests (default: false)
-    pathResolver: resolve, // Custom path resolver
+    update: true,           // Run snapshot tests in UPDATE mode (default: false)
+    prune: true,            // Prune snapshots for removed tests (default: true)
+    indentCodeBlocks: true, // Indent code blocks instead of using ``` delimiters (default: false)
+    checkSourceFile: true,  // Checks existince of the source file associated with tests (default: false)
+    pathResolver: resolve,  // Custom path resolver
   }
 });
 ```
