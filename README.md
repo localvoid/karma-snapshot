@@ -132,11 +132,17 @@ $ UPDATE=1 karma start --single-run
 ## Config
 
 ```js
+function resolve(basePath, suiteName) {
+  return path.join(basePath, "__snapshots__", suiteName);
+}
+
 config.set({
   ...
   snapshot: {
-    update: true,       // Run snapshot tests in UPDATE mode (default: false)
-    prune: true,        // Prune snapshots for removed tests (default: true)
+    update: true,          // Run snapshot tests in UPDATE mode (default: false)
+    prune: true,           // Prune snapshots for removed tests (default: true)
+    checkSourceFile: true, // Checks existince of the source file associated with tests (default: false)
+    pathResolver: resolve, // Custom path resolver
   }
 });
 ```
