@@ -1,17 +1,18 @@
 # Karma Plugin for Snapshot Testing
 
-`karma-snapshot` provides a communication layer between browser and karma to store and retrieve snapshot data.
+`karma-snapshot` provides a communication layer between browser and [Karma](http://karma-runner.github.io/) to store and
+retrieve snapshots.
 
 ## Snapshot Format
 
 Snapshots are stored in a [Markdown](https://en.wikipedia.org/wiki/Markdown) format to improve readability.
 
 ````md
-## `Root Suite`
+# `src/html.js`
 
-##   `Sub Suite`
+## `Sub Suite`
 
-####     `HTML Snapshot`
+####   `HTML Snapshot`
 
 ```html
 <div>
@@ -19,6 +20,11 @@ Snapshots are stored in a [Markdown](https://en.wikipedia.org/wiki/Markdown) for
 </div>
 ```
 ````
+
+## Snapshot File Path
+
+Snapshot file path is extracted from the name of the root suit cases and stored alongside with a tested files in a
+`__snapshots__` directory.
 
 ## Usage Example with Mocha and Chai
 
@@ -40,10 +46,13 @@ module.exports = function (config) {
     frameworks: ["mocha", "snapshot", "mocha-snapshot"],
     reporters: ["mocha"],
     preprocessors: {
-      "**/__snapshot__/**/*.md": ["snapshot"],
+      "**/__snapshots__/**/*.md": ["snapshot"],
       "__tests__/index.js": ["webpack", "sourcemap"]
     },
-    files: ["__tests__/index.js"],
+    files: [
+      "**/__snapshots__/**/*.md",
+      "__tests__/index.js"
+    ],
 
     colors: true,
     autoWatch: true,
@@ -82,16 +91,29 @@ module.exports = function (config) {
 };
 ```
 
+Source file:
+
+```js
+// src/index.js
+
+export function test() {
+  return "Snapshot Test";
+}
+```
+
 Test file:
 
 ```js
 // __tests__/index.js
 import { use, expect } from "chai";
 import { matchSnapshot } from "chai-karma-snapshot";
+import { test } from "../src/index.js";
 use(matchSnapshot);
 
-it("check snapshot", () => {
-  expect("Hello World").to.matchSnapshot();
+describe("src/index.js", () => {
+  it("check snapshot", () => {
+    expect(test()).to.matchSnapshot();
+  });
 });
 ```
 
@@ -115,7 +137,6 @@ config.set({
   snapshot: {
     update: true,       // Run snapshot tests in UPDATE mode (default: false)
     prune: true,        // Prune snapshots for removed tests (default: true)
-    path: "snapshot.md" // Path to snapshot data file (default: __snapshot__/index.md)
   }
 });
 ```

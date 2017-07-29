@@ -1,6 +1,6 @@
 {
   "name": "karma-snapshot",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "lib/index.js",
   "description": "Karma plugin for snapshot testing.",
   "license": "MIT",
