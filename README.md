@@ -147,3 +147,52 @@ config.set({
   }
 });
 ```
+
+## Internals
+
+### Snapshot Data
+
+`karma-snapshot` plugin is communicating with a browser by assigning global variable on a `window` object. It is stored
+in a `__snapshot__` variable.
+
+Snapshot data has a simple data structure:
+
+```ts
+interface SnapshotState {
+  update?: boolean;
+  suite?: SnapshotSuite;
+}
+
+interface SnapshotSuite {
+  children: { [key: string]: SnapshotSuite };
+  snapshots: { [key: string]: Snapshot[] };
+  visited?: boolean;
+  dirty?: boolean;
+}
+
+interface Snapshot {
+  lang: string;
+  code: string;
+  visited?: boolean;
+  dirty?: boolean;
+}
+```
+
+When `SnapshotState.update` variable is `true`, it indicates that assertion plugin should run in update mode, and
+instead of checking snapshots, it should update all values.
+
+`SnapshotState.suite` is a reference to the root suite.
+
+`SnapshotSuite` is a tree with snapshots that has a similar structure to test suites. `children` property is used to
+store references to children suites, and `snapshots` is used to store snapshot lists for tests in the current snapshot.
+Snapshots are stored as a list because each test can have multiple snapshot checks, and they should be automatically
+indexed by their position.
+
+`Snapshot` is an object that stores details about snapshot. `lang` property indicates which language should be used
+in a markdown format to improve readability. `code` property stores snapshot value that will be checked by an assertion
+plugin.
+
+`visited` is a flag that should be marked by an assertion plugin when it visits suites and snapshots. Visited flags are
+used to  automatically prune removed snapshots.
+
+`dirty` is a flag that should be marked by an assertion plugin when it updates or adds a new snapshot.
