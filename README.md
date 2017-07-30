@@ -152,8 +152,8 @@ config.set({
 
 ### Snapshot Data
 
-`karma-snapshot` plugin is communicating with a browser by assigning global variable on a `window` object. It is stored
-in a `__snapshot__` variable.
+`karma-snapshot` plugin is communicating with a browser by assigning a global variable `__snapshot__` on a `window`
+object.
 
 Snapshot data has a simple data structure:
 
