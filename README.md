@@ -26,6 +26,8 @@ Snapshots are stored in a [Markdown](https://en.wikipedia.org/wiki/Markdown) for
 Snapshot file path is extracted from the name of the root suit cases and stored alongside with a tested files in a
 `__snapshots__` directory.
 
+Snapshot file path can be changed by providing custom `pathResolver` in snapshot config.
+
 ## Usage Example with Mocha and Chai
 
 ```sh
@@ -58,11 +60,7 @@ module.exports = function (config) {
     autoWatch: true,
 
     webpack: {
-      plugins: [
-        new webpack.SourceMapDevToolPlugin({
-          test: /\.js$/,
-        }),
-      ],
+      devtool: "inline-source-map",
       performance: {
         hints: false
       },
@@ -141,7 +139,7 @@ config.set({
   snapshot: {
     update: true,           // Run snapshot tests in UPDATE mode (default: false)
     prune: true,            // Prune snapshots for removed tests (default: true)
-    indentCodeBlocks: true, // Indent code blocks instead of using ``` delimiters (default: false)
+    format: "indented-md",  // Snapshot format (default: md)
     checkSourceFile: true,  // Checks existince of the source file associated with tests (default: false)
     pathResolver: resolve,  // Custom path resolver
   }
