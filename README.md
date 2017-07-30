@@ -5,7 +5,12 @@ retrieve snapshots.
 
 ## Snapshot Format
 
-Snapshots are stored in a [Markdown](https://en.wikipedia.org/wiki/Markdown) format to improve readability.
+Snapshot can be stored in different formats. Right now there are two formats supported: `md` and `indented-md`.
+
+### Markdown Format
+
+This format is preferred when you specify language for code blocks in an assertion plugin. With this format, code
+editors will automatically highlight syntax of code blocks.
 
 ````md
 # `src/html.js`
@@ -20,6 +25,20 @@ Snapshots are stored in a [Markdown](https://en.wikipedia.org/wiki/Markdown) for
 </div>
 ```
 ````
+
+### Indented Markdown Format
+
+```md
+# `src/html.js`
+
+## `Sub Suite`
+
+####   `HTML Snapshot`
+
+    <div>
+      <span />
+    </div>
+```
 
 ## Snapshot File Path
 
