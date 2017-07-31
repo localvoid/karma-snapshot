@@ -165,6 +165,21 @@ config.set({
 });
 ```
 
+## Snapshot Pruning
+
+By default, snapshot pruning will remove dead snapshots without removing any files. To enable dead snapshot files
+detection, snapshot config option `prune` should have a string value with a pattern that should match all snapshot
+files. For example:
+
+```js
+config.set({
+  ...
+  snapshot: {
+    prune: "**/__snapshots__/**/*.md",
+  }
+});
+```
+
 ## Custom Snapshot Format
 
 Snapshot config option `format` also works with custom serialization formats. Custom snapshot serializer should have
