@@ -45,7 +45,7 @@ editors will automatically highlight syntax of code blocks.
 Snapshot file path is extracted from the name of the root suit cases and stored alongside with a tested files in a
 `__snapshots__` directory.
 
-Snapshot file path can be changed by providing custom `pathResolver` in snapshot config.
+Snapshot file path can be changed by providing a custom `pathResolver` in snapshot config.
 
 ## Usage Example with Mocha and Chai
 
@@ -165,6 +165,18 @@ config.set({
 });
 ```
 
+## Custom Snapshot Format
+
+Snapshot config option `format` also works with custom serialization formats. Custom snapshot serializer should have
+interface:
+
+```ts
+interface SnapshotSerializer {
+  serialize: (name: string, suite: SnapshotSuite) => string,
+  deserialize: (content: string) => { name: string, suite: SnapshotSuite },
+}
+```
+
 ## Internals
 
 ### Snapshot Data
@@ -176,8 +188,8 @@ Snapshot data has a simple data structure:
 
 ```ts
 interface SnapshotState {
-  update?: boolean;
-  suite?: SnapshotSuite;
+  update: boolean;
+  suite: SnapshotSuite;
 }
 
 interface SnapshotSuite {
