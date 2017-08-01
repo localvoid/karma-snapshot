@@ -215,7 +215,7 @@ interface SnapshotSuite {
 }
 
 interface Snapshot {
-  lang: string;
+  lang?: string;
   code: string;
   visited?: boolean;
   dirty?: boolean;
