@@ -3,6 +3,11 @@
 `karma-snapshot` provides a communication layer between browser and [Karma](http://karma-runner.github.io/) to store and
 retrieve snapshots.
 
+## Supported Assertion Libraries
+
+- [chai](https://github.com/localvoid/chai-karma-snapshot)
+- [iko](https://github.com/localvoid/iko)
+
 ## Snapshot Format
 
 Snapshot can be stored in different formats. Right now there are two formats supported: `md` and `indented-md`.
@@ -202,8 +207,14 @@ object.
 Snapshot data has a simple data structure:
 
 ```ts
+declare global {
+  interface Window {
+    __snapshot__: SnapshotState;
+  }
+}
+
 interface SnapshotState {
-  update: boolean;
+  update?: boolean;
   suite: SnapshotSuite;
 }
 
@@ -240,3 +251,40 @@ plugin.
 used to  automatically prune removed snapshots.
 
 `dirty` is a flag that should be marked by an assertion plugin when it updates or adds a new snapshot.
+
+### Interface for Assertion Libraries
+
+To make it easier to add support for assertion libraries, `SnapshotState` has two methods that should be used when
+creating an API for an assertion library.
+
+```ts
+interface SnapshotSuite {
+  get(path: string[], index: number): Snapshot | undefined;
+  set(path: string[], index: number, code: string, lang?: string): void;
+}
+```
+
+`get()` method tries to find a `Snapshot` in a current snapshot state. It also automatically marks all nodes on the
+`path` as visited.
+
+`set()` method adds or updates an existing `Snapshot`.
+
+Here is an example how it should be used:
+
+```ts
+function matchSnapshot(path: string[], index: number, received: string) {
+  if (snapshotState.update) {
+    snapshotState.set(path, index, received);
+  } else {
+    const snapshot = snapshotState.get(path, index);
+    if (!snapshot) {
+      snapshotState.set(path, index, received);
+    } else {
+      const pass = received === snapshot.code;
+      if (!pass) {
+        throw new AssertionError(`Received value does not match stored snapshot ${index}`);
+      }
+    }
+  }
+}
+```
