@@ -157,7 +157,7 @@ $ UPDATE=1 karma start --single-run
 
 ```js
 function resolve(basePath, suiteName) {
-  return path.join(basePath, "__snapshots__", suiteName);
+  return path.join(basePath, "__snapshots__", suiteName + ".md");
 }
 
 config.set({
