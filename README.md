@@ -3,6 +3,8 @@
 `karma-snapshot` provides a communication layer between browser and [Karma](http://karma-runner.github.io/) to store and
 retrieve snapshots.
 
+![karma-snapshot example][example]
+
 ## Supported Assertion Libraries
 
 - [chai](https://github.com/localvoid/chai-karma-snapshot)
@@ -288,3 +290,5 @@ function matchSnapshot(path: string[], index: number, received: string) {
   }
 }
 ```
+
+[example]: https://localvoid.github.io/karma-snapshot/images/example.png "karma-snapshot example"
