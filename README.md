@@ -99,6 +99,7 @@ module.exports = function (config) {
 
     snapshot: {
       update: !!process.env.UPDATE,
+      prune: !!process.env.PRUNE,
     },
 
     mochaReporter: {
@@ -153,6 +154,12 @@ Update snapshots:
 $ UPDATE=1 karma start --single-run
 ```
 
+Prune snapshots:
+
+```sh
+$ PRUNE=1 karma start --single-run
+```
+
 ## Config
 
 ```js
@@ -164,25 +171,10 @@ config.set({
   ...
   snapshot: {
     update: true,           // Run snapshot tests in UPDATE mode (default: false)
-    prune: true,            // Prune snapshots for removed tests (default: true)
+    prune: false,           // Prune unused snapshots (default: false)
     format: "indented-md",  // Snapshot format (default: md)
     checkSourceFile: true,  // Checks existince of the source file associated with tests (default: false)
     pathResolver: resolve,  // Custom path resolver
-  }
-});
-```
-
-## Snapshot Pruning
-
-By default, snapshot pruning will remove dead snapshots without removing any files. To enable dead snapshot files
-detection, snapshot config option `prune` should have a string value with a pattern that should match all snapshot
-files. For example:
-
-```js
-config.set({
-  ...
-  snapshot: {
-    prune: "**/__snapshots__/**/*.md",
   }
 });
 ```
