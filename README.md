@@ -263,6 +263,7 @@ creating an API for an assertion library.
 interface SnapshotSuite {
   get(path: string[], index: number): Snapshot | undefined;
   set(path: string[], index: number, code: string, lang?: string): void;
+  match(received: string, expected: string): boolean;
 }
 ```
 
@@ -270,6 +271,8 @@ interface SnapshotSuite {
 `path` as visited.
 
 `set()` method adds or updates an existing `Snapshot`.
+
+`match()` method checks if two snapshots are matching in normalized form.
 
 Here is an example how it should be used:
 
@@ -282,7 +285,7 @@ function matchSnapshot(path: string[], index: number, received: string) {
     if (!snapshot) {
       snapshotState.set(path, index, received);
     } else {
-      const pass = received === snapshot.code;
+      const pass = snapshotState.match(received, snapshot.code);
       if (!pass) {
         throw new AssertionError(`Received value does not match stored snapshot ${index}`);
       }
