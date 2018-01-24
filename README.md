@@ -130,14 +130,17 @@ Test file:
 
 ```js
 // __tests__/index.js
-import { use, expect } from "chai";
+import { use, expect, assert } from "chai";
 import { matchSnapshot } from "chai-karma-snapshot";
 import { test } from "../src/index.js";
 use(matchSnapshot);
 
 describe("src/index.js", () => {
   it("check snapshot", () => {
+    // 'expect' syntax
     expect(test()).to.matchSnapshot();
+    // 'assert' syntax
+    assert.matchSnapshot(test());
   });
 });
 ```
