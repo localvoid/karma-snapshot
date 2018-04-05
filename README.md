@@ -177,7 +177,10 @@ config.set({
     prune: false,           // Prune unused snapshots (default: false)
     format: "indented-md",  // Snapshot format (default: md)
     checkSourceFile: true,  // Checks existince of the source file associated with tests (default: false)
-    pathResolver: resolve,  // Custom path resolver
+    pathResolver: resolve,  // Custom path resolver,
+    limitUnusedSnapshotsInWarning: -1  // Limit number of unused snapshots reported in the warning
+                                       // -1 means no limit
+
   }
 });
 ```
